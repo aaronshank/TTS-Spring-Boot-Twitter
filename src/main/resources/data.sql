@@ -1,0 +1,1 @@
+merge into `role` values (1, 'USER');
