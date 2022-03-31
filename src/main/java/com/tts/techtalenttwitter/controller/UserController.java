@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.tts.techtalenttwitter.model.Tweet;
 import com.tts.techtalenttwitter.model.TweetDisplay;
 import com.tts.techtalenttwitter.model.User;
 import com.tts.techtalenttwitter.service.TweetService;
