@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <title>User</title>
   <div th:replace="fragments/head">
 </head>
 
@@ -30,6 +31,12 @@
       <p class="mb-1" th:utext="${tweet.message}"></p>
     </div>
   </div>
+  <form th:action="@{/follow/} + ${user.username}" th:if="${!following}" method="post">
+    <button style="float:right" type="Submit" class="btn btn-lg btn-success">Follow</button>
+  </form>
+  <form th:action="@{/unfollow/} + ${user.username}" th:if="${following}" method="post">
+    <button style="float:right" type="Submit" class="btn btn-lg btn-primary unfollow_btn">Following</button>
+  </form>
 </body>
 
 </html>
