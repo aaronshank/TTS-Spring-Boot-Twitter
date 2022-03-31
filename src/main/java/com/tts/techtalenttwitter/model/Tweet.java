@@ -41,7 +41,7 @@ public class Tweet {
   @JoinColumn(name = "user_id")
   @OnDelete(action = OnDeleteAction.CASCADE)
   private User user;
-  
+
   @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE})
   @JoinTable(name = "tweet_tag", joinColumns = @JoinColumn(name = "tweet_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
   private List<Tag> tags;
@@ -53,7 +53,7 @@ public class Tweet {
   @CreationTimestamp
   private Date createdAt;
 
-
+  // Use the code below if your lombok is not working:
   // public Tweet() {
   // }
 
