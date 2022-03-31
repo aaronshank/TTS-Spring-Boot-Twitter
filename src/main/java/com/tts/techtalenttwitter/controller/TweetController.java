@@ -1,5 +1,6 @@
 package com.tts.techtalenttwitter.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -11,10 +12,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.tts.techtalenttwitter.model.Tag;
 import com.tts.techtalenttwitter.model.Tweet;
 import com.tts.techtalenttwitter.model.TweetDisplay;
 import com.tts.techtalenttwitter.model.User;
+import com.tts.techtalenttwitter.repository.TagRepository;
 import com.tts.techtalenttwitter.service.TweetService;
 import com.tts.techtalenttwitter.service.UserService;
 
@@ -25,10 +29,25 @@ public class TweetController {
 	
     @Autowired
     private TweetService tweetService;
+
+    @Autowired
+    private TagRepository tagRepository;
     
     @GetMapping(value= {"/tweets", "/"})
-    public String getFeed(Model model){
-        List<TweetDisplay> tweets = tweetService.findAll();
+    public String getFeed(@RequestParam(value = "filter", required = false) String filter, Model model) {
+      User loggedInUser = userService.getLoggedInUser();
+        List<TweetDisplay> tweets = new ArrayList<>();
+        if (filter == null) {
+          filter = "all";
+        }
+        if (filter.equalsIgnoreCase("following")) {
+          List<User> following = loggedInUser.getFollowing();
+          tweets = tweetService.findAllByUsers(following);
+          model.addAttribute("filter", "following");
+        } else {
+          tweets = tweetService.findAll();
+          model.addAttribute("filter", "all");
+        }
         model.addAttribute("tweetList", tweets);
         return "feed";
     }
@@ -57,5 +76,12 @@ public class TweetController {
             model.addAttribute("tweet", new Tweet());
         }
         return "newTweet";
+    }
+
+    @GetMapping(value = "/tags")
+    public String getTags(Model model) {
+      List<Tag> tag = (List<Tag>)tagRepository.findAll();
+      model.addAttribute("tagList", tag);
+      return "tags";
     }
 }
