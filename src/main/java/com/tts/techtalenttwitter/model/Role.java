@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Role {	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name= "role_id")
-	private Long id;
-	private String role; //Name of role -- eg. "user"
+public class Role {
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "role_id")
+  private Long id;
+  private String role; // Name of role -- eg. "user"
 }

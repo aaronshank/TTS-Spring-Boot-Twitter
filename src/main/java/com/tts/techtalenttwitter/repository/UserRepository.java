@@ -18,11 +18,11 @@ import com.tts.techtalenttwitter.model.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
-	//The basic methods we add with extends CrudRepository
-	//are basically pretty the bare minimum interface we would
-	//want to use to talk to a database.
+  // The basic methods we add with extends CrudRepository
+  // are basically pretty the bare minimum interface we would
+  // want to use to talk to a database.
 
-	//This sppcifies that we are going to need to query by username
-	User findByUsername(String username);
+  // This sppcifies that we are going to need to query by username
+  User findByUsername(String username);
 
 }

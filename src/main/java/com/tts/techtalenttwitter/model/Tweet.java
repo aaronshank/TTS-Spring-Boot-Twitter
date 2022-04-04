@@ -30,35 +30,33 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Tweet {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "tweet_id")
-	private Long id;
-	
-	//This user field--we aren't actually store
-	//an entire inside a column of the Tweet database table.
-	//instead we actually just want to store in our
-	//database a user_id -- which will be the foreign key
-	//we can use look up a user.
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "user_id")
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	private User user;
-	
-	//We are gonna add annotations that tell
-	//SPRING BOOT what is and isn't a valid message.
-	@NotEmpty(message = "Tweet cannot be empty")
-	@Length(max = 280, message = "Tweet cannot have more than 280 characters")
-	private String message;
-	
-	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(name = "tweet_tag", joinColumns = @JoinColumn(name = "tweet_id"),
-	           inverseJoinColumns = @JoinColumn(name = "tag_id"))
-	private List<Tag> tags;
-	
-	@CreationTimestamp
-	private Date createdAt;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "tweet_id")
+  private Long id;
+
+  // This user field--we aren't actually store
+  // an entire inside a column of the Tweet database table.
+  // instead we actually just want to store in our
+  // database a user_id -- which will be the foreign key
+  // we can use look up a user.
+
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "user_id")
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  private User user;
+
+  // We are gonna add annotations that tell
+  // SPRING BOOT what is and isn't a valid message.
+  @NotEmpty(message = "Tweet cannot be empty")
+  @Length(max = 280, message = "Tweet cannot have more than 280 characters")
+  private String message;
+
+  @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+  @JoinTable(name = "tweet_tag", joinColumns = @JoinColumn(name = "tweet_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+  private List<Tag> tags;
+
+  @CreationTimestamp
+  private Date createdAt;
 
 }

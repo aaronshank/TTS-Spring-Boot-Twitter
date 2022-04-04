@@ -18,15 +18,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Tag {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="tag_id")
-	private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "tag_id")
+  private Long id;
 
-	private String phrase; //Name of the tag.
-	
-	
-	//Need some mapping of tags to tweets
-	@ManyToMany(mappedBy = "tags")
-	private List<Tweet> tweets;
+  private String phrase; // Name of the tag.
+
+  // Need some mapping of tags to tweets
+  @ManyToMany(mappedBy = "tags")
+  private List<Tweet> tweets;
 }

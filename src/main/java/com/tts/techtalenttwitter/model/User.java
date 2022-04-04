@@ -67,9 +67,7 @@ public class User {
 	//there is no good way to store an unlimited number of roles to
 	//a table entry....
 	
-	@ManyToMany(cascade = CascadeType.ALL) //automatically update this 
-	                                       //table when users are deleted and/or
-	                                       //roles are deleted.
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name="user_role", joinColumns = @JoinColumn(name = "user_id"), 
 	           inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;

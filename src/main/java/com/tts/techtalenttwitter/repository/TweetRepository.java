@@ -10,8 +10,11 @@ import com.tts.techtalenttwitter.model.User;
 
 @Repository
 public interface TweetRepository extends CrudRepository<Tweet, Long> {
-	List<Tweet> findAllByOrderByCreatedAtDesc();
-	List<Tweet> findAllByUserOrderByCreatedAtDesc(User user);
-	List<Tweet> findAllByUserInOrderByCreatedAtDesc(List<User> users);
-	List<Tweet> findByTags_PhraseOrderByCreatedAtDesc(String phrase);
+  List<Tweet> findAllByOrderByCreatedAtDesc();
+
+  List<Tweet> findAllByUserOrderByCreatedAtDesc(User user);
+
+  List<Tweet> findAllByUserInOrderByCreatedAtDesc(List<User> users);
+
+  List<Tweet> findByTags_PhraseOrderByCreatedAtDesc(String phrase);
 }

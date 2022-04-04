@@ -7,5 +7,5 @@ import com.tts.techtalenttwitter.model.Tag;
 
 @Repository
 public interface TagRepository extends CrudRepository<Tag, Long> {
-	Tag findByPhrase(String phrase);
+  Tag findByPhrase(String phrase);
 }
