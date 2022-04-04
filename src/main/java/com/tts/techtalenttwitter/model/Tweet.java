@@ -22,82 +22,43 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Tweet {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "tweet_id")
-  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "tweet_id")
+	private Long id;
+	
+	//This user field--we aren't actually store
+	//an entire inside a column of the Tweet database table.
+	//instead we actually just want to store in our
+	//database a user_id -- which will be the foreign key
+	//we can use look up a user.
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "user_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private User user;
+	
+	//We are gonna add annotations that tell
+	//SPRING BOOT what is and isn't a valid message.
+	@NotEmpty(message = "Tweet cannot be empty")
+	@Length(max = 280, message = "Tweet cannot have more than 280 characters")
+	private String message;
+	
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name = "tweet_tag", joinColumns = @JoinColumn(name = "tweet_id"),
+	           inverseJoinColumns = @JoinColumn(name = "tag_id"))
+	private List<Tag> tags;
+	
+	@CreationTimestamp
+	private Date createdAt;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "user_id")
-  @OnDelete(action = OnDeleteAction.CASCADE)
-  private User user;
-
-  @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE})
-  @JoinTable(name = "tweet_tag", joinColumns = @JoinColumn(name = "tweet_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-  private List<Tag> tags;
-
-  @NotEmpty(message = "Tweet cannot be empty")
-  @Length(max = 280, message = "Tweet cannot have more than 280 characters")
-  private String message;
-
-  @CreationTimestamp
-  private Date createdAt;
-
-  // Use the code below if your lombok is not working:
-  // public Tweet() {
-  // }
-
-  // public Tweet(Long id, User user, String message, Date createdAt) {
-  //   this.id = id;
-  //   this.user = user;
-  //   this.message = message;
-  //   this.createdAt = createdAt;
-  // }
-
-  // public Long getId() {
-  //   return id;
-  // }
-
-  // public void setId(Long id) {
-  //   this.id = id;
-  // }
-
-  // public User getUser() {
-  //   return user;
-  // }
-
-  // public void setUser(User user) {
-  //   this.user = user;
-  // }
-
-  // public String getMessage() {
-  //   return message;
-  // }
-
-  // public void setMessage(String message) {
-  //   this.message = message;
-  // }
-
-  // public Date getCreatedAt() {
-  //   return createdAt;
-  // }
-
-  // public void setCreatedAt(Date createdAt) {
-  //   this.createdAt = createdAt;
-  // }
-
-  // @Override
-  // public String toString() {
-  //   return "Tweet [createdAt=" + createdAt + ", id=" + id + ", message=" + message + ", user=" + user + "]";
-  // }
 }
