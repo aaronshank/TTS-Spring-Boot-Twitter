@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.tts.techtalenttwitter.model.Tweet;
+import com.tts.techtalenttwitter.model.TweetDisplay;
 import com.tts.techtalenttwitter.model.User;
 import com.tts.techtalenttwitter.service.TweetService;
 import com.tts.techtalenttwitter.service.UserService;
@@ -33,7 +33,7 @@ public class UserController {
 		//model variable.
 		User loggedInUser = userService.getLoggedInUser();
 		User user = userService.findByUsername(username);
-		List<Tweet> tweets = tweetService.findAllByUser(user);
+		List<TweetDisplay> tweets = tweetService.findAllByUser(user);
 		
 		List<User> following = loggedInUser.getFollowing();
 		boolean isFollowing = false;
@@ -65,7 +65,7 @@ public class UserController {
 	private void setTweetCounts(List<User> users, Model model) {
 		Map<String, Integer> tweetCounts = new HashMap<>();
 		for (User user : users) {
-			List<Tweet> tweets = tweetService.findAllByUser(user);
+			List<TweetDisplay> tweets = tweetService.findAllByUser(user);
 			tweetCounts.put(user.getUsername(), tweets.size());
 		}
 		model.addAttribute("tweetCounts", tweetCounts);		
