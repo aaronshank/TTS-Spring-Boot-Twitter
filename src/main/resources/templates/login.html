@@ -17,7 +17,9 @@
         Log in
       </button>
     </form>
-    <a th:href="@{/signup}">Sign Up</a>
+    <form th:action="@{/signup}" method="post">
+      <button class="btn btn-md btn-success btn-block" name="Sign Up" value="Sign Up" type="Submit">Sign Up</button>
+    </form>
   </div>
 </body>
 

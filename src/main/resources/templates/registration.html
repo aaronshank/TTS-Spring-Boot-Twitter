@@ -38,6 +38,12 @@
         </button>
       </div>
     </form>
+    <div th:if="${success}">
+      <span th:text="${success}"></span>
+      <form th:action="@{/login}">
+        <button class="btn btn-md btn-success">Log In</button>
+      </form>
+    </div>
   </div>
 </body>
 
